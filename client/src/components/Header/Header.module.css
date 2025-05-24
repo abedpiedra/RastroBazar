@@ -1,0 +1,41 @@
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    background-color: #eaeae8;
+
+    >div {
+        margin-left: 20px;
+    }
+
+    >ul {
+        display: flex;
+        list-style: none;
+
+        >li {
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            padding-right: 10px;
+            display: flex;
+            justify-content: center;
+            padding: 5px;
+
+            >a {
+                text-decoration: none;
+                color: #333;
+                text-align: center;
+            }
+        }
+    }
+    >ul>li>{
+        max-width: 100px;
+    }
+
+    >ul>li:hover {
+        border-radius: 10px;
+        background-color: #f7e29f;
+        transition: 1s ease;
+    }
+}
