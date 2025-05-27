@@ -30,6 +30,8 @@
   color: #666;
 }
 
+
+
 .signup-link a {
   color: #2575fc;
   text-decoration: none;
@@ -46,6 +48,12 @@ h3 {
 }
 
 
+select{
+  width: 100%; /* Asegura que los inputs ocupen el ancho completo */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
 input[type="text"]{
   margin-bottom: 0px !important;
