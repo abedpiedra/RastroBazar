@@ -7,6 +7,8 @@ import {
   obtenerProductoPorId,
   deleteProducts,
   actualizarProducto,
+  actualizarUmbral,
+  verificarAlertas, 
 } from "../controllers/products.controller.js";
 // Importamos middleware para validar que los datos recibidos cumplan con un esquema
 import { validateSchema } from "../middlewares/validator.middleware.js";
@@ -25,5 +27,9 @@ router.get("/products/:id", obtenerProductoPorId);
 // Ruta para obtener un producto por ID
 router.put("/products/:id", actualizarProducto);
 // Ruta para actualizar un producto por ID, no requiere validación de datos
+router.put("/products/:id/umbral", actualizarUmbral);
+// Actualizar umbral stock
+router.get("/verificar-alertas", verificarAlertas);
+// Verificar alertas: devuelve productos con stock <= umbral
 
 export default router;

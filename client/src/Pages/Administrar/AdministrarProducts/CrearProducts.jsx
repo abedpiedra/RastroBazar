@@ -19,7 +19,7 @@ function CrearProducts() {
       try {
         const response = await proveedoresRequest();
         setProveedors(response.data); // Asignar los Proveedors al estado
-      } catch (error) { 
+      } catch (error) {
         setError("Error al obtener las sucursales: " + error.message); // Manejo de errores al obtener Proveedors
       }
     };
@@ -41,7 +41,7 @@ function CrearProducts() {
         // Manejo específico para errores de duplicado
         if (errorData.code === 11000) {
           setRegisterErrors([
-            "El usuario ya está registrada. Por favor, elige otra.",
+            "El producto esta registrado. Por favor, ingrese otro.",
           ]);
         } else {
           setRegisterErrors(
@@ -77,7 +77,7 @@ function CrearProducts() {
             validate: (value) => value !== "" || "Selecciona una sucursal",
           })}
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             {" "}
             {/* Establecer la opción seleccionada por defecto */}
             Selecciona una sucursal
@@ -101,41 +101,56 @@ function CrearProducts() {
           id="nombre"
           type="string"
           {...register("nombre", { required: "Este campo es requerido" })}
-          placeholder="Ej: 4"
+          placeholder="Ej: Coca-Cola"
         />
-        {errors.nombre && <p className="text-danger">{errors.nombre.message}</p>}
+        {errors.nombre && (
+          <p className="text-danger">{errors.nombre.message}</p>
+        )}
 
-        <label htmlFor="tiproducto">Descripción</label>
+        <label htmlFor="descripcion">Descripción</label>
         <input
-          id="tiproducto"
-          {...register("tiproducto", { required: "Este campo es requerido" })}
+          id="descripcion"
+          {...register("descripcion", { required: "Este campo es requerido" })}
           defaultValue=""
         />
-        {errors.tiproducto && <p className="text-danger">{errors.tiproducto.message}</p>}
+        {errors.descripcion && (
+          <p className="text-danger">{errors.descripcion.message}</p>
+        )}
 
-        <label htmlFor="tproducto">Stock</label>
+        <label htmlFor="stock">Stock</label>
         <input
-          id="tproducto"
-          {...register("tproducto", { required: "Este campo es requerido" })}
+          id="stock"
+          type="number"
+          {...register("stock", { required: "Este campo es requerido" })}
           defaultValue=""
         />
-        {errors.tproducto && <p className="text-danger">{errors.tproducto.message}</p>}
+        {errors.stock && (
+          <p className="text-danger">{errors.stock.message}</p>
+        )}
 
-        <label htmlFor="tproducto">Precio</label>
-        <input
-          id="tproducto"
-          {...register("tproducto", { required: "Este campo es requerido" })}
-          defaultValue=""
-        />
-        {errors.tproducto && <p className="text-danger">{errors.tproducto.message}</p>}
-
-        <label htmlFor="tproducto">Proveedor</label>
-        <input
-          id="tproducto"
-          {...register("tproducto", { required: "Este campo es requerido" })}
-          defaultValue=""
-        />
-        {errors.tproducto && <p className="text-danger">{errors.tproducto.message}</p>}
+        <label htmlFor="precio">Precio</label>
+        <div style={{ position: "relative" }}>
+          <span
+            style={{
+              position: "absolute",
+              left: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              pointerEvents: "none",
+            }}
+          >
+            $
+          </span>
+          <input
+            id="precio"
+            type="number"
+            style={{ paddingLeft: "25px" }} // Desplazamos el texto para que no choque con el $
+            {...register("precio", { required: "Este campo es requerido" })}
+          />
+        </div>
+        {errors.precio && (
+          <p className="text-danger">{errors.precio.message}</p>
+        )}
 
         <button type="submit" className="btn btn-primary mt-3">
           Agregar

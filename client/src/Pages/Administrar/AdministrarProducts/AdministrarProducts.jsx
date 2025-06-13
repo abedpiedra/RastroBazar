@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AdministrarProducts.module.css";
 import { productsRequest, deleteProducto } from "../../../api/products.js";
+import { verificarAlertasRequest } from "../../../api/alertas.js"; // <== Agregado aquí
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
@@ -12,10 +13,10 @@ const AdministrarProducts = () => {
 
   const handleAgregarClick = () => navigate("/CrearProducts");
 
-  const eliminar = async (_id, nproducto) => {
+  const eliminar = async (_id, nombre) => {
     const { isConfirmed } = await Swal.fire({
       title: "Confirmación",
-      text: `¿Eliminar "producto ${nproducto}"?`,
+      text: `¿Eliminar "producto ${nombre}"?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3298dc",
@@ -26,9 +27,11 @@ const AdministrarProducts = () => {
     if (isConfirmed) {
       try {
         const { data } = await deleteProducto(_id);
-        if (data.status === "ok") {
-          toast("Producto eliminada correctamente", { autoClose: 2000 });
-          setProducts((prev) => prev.filter((producto) => producto._id !== _id));
+        if (data.message === "Producto eliminado correctamente") {
+          toast("Producto eliminado correctamente", { autoClose: 2000 });
+          setProducts((prev) =>
+            prev.filter((producto) => producto._id !== _id)
+          );
         } else {
           toast.error("Error eliminando. Intenta de nuevo.");
         }
@@ -38,11 +41,58 @@ const AdministrarProducts = () => {
     }
   };
 
+  const verificarStock = async () => {
+    try {
+      // 1. Llamas a la API para refrescar o verificar alertas si es necesario
+      await verificarAlertasRequest();
+
+      // 2. Recorres los productos para detectar stock bajo
+      let hayStockBajo = false;
+
+      products.forEach((producto) => {
+        if (producto.stock < producto.umbral) {
+          hayStockBajo = true;
+          toast.warn(
+            `⚠️ Producto "${producto.nombre}" está bajo en stock: ${producto.stock}`,
+            { autoClose: 4000 }
+          );
+        }
+      });
+
+      // 3. Mensaje general si no hay ningún producto bajo el umbral
+      if (!hayStockBajo) {
+        toast.success("No hay productos con stock bajo.");
+      }
+    } catch (error) {
+      toast.error("Error al verificar alertas");
+    }
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const { data } = await productsRequest();
         setProducts(data);
+
+        // Aquí revisamos si hay productos bajo el umbral
+        data.forEach((producto) => {
+          if (producto.stock < producto.umbral) {
+            const toastId = `stock-${producto._id}`;
+            if (!toast.isActive(toastId)) {
+              toast.warn(
+                `Producto "${producto.nombre}" está bajo en stock: ${producto.stock}`,
+                {
+                  toastId: toastId,
+                  position: "top-right",
+                  autoClose: 5000,
+                  pauseOnHover: true,
+                  draggable: true,
+                  closeOnClick: true,
+                }
+              );
+            }
+          }
+        });
       } catch (error) {
         setError(error.message);
       }
@@ -52,10 +102,17 @@ const AdministrarProducts = () => {
 
   return (
     <div className={`${styles.container} mt-4`}>
-      <button className="btn btn-primary" onClick={handleAgregarClick}>
-        Agregar
-      </button>
+      <div className="d-flex gap-2 mb-3">
+        <button className="btn btn-primary" onClick={handleAgregarClick}>
+          Agregar
+        </button>
+        <button className="btn btn-warning" onClick={verificarStock}>
+          Verificar Stock
+        </button>
+      </div>
+
       {error && <p style={{ color: "red" }}>{error}</p>}
+
       <div className="table-responsive mt-3">
         <table className="table table-bordered">
           <thead className="table-light">
@@ -80,12 +137,18 @@ const AdministrarProducts = () => {
                 <td>{producto.precio}</td>
                 <td>{producto.proveedor}</td>
                 <td>
-                  <button className="btn btn-danger btn-sm" onClick={() => navigate(`/EditarProducto/${producto._id}`)}>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => navigate(`/EditarProducto/${producto._id}`)}
+                  >
                     Editar
                   </button>
                 </td>
                 <td>
-                  <button className="btn btn-danger btn-sm" onClick={() => eliminar(producto._id, producto.nproducto)}>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => eliminar(producto._id, producto.nombre)}
+                  >
                     Eliminar
                   </button>
                 </td>

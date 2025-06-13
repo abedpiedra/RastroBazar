@@ -16,7 +16,7 @@ function Login() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/home");
+      navigate("/AdministrarProveedores");
     }
   }, [isAuthenticated, navigate]);
 
@@ -31,10 +31,10 @@ function Login() {
       ))}
       <img
         className={styles.logo}
-        src="https://static.wixstatic.com/media/0a8059_2238928883ab4c278a1231c12510b720~mv2.png/v1/fill/w_51,h_75,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/0a8059_2238928883ab4c278a1231c12510b720~mv2.png"
-        alt="Logo de la empresa"
+        src=""
+        alt=""
       />
-      <h3>Bienvenido</h3>
+      <h3>Bienvenido a Rastrobazar</h3>
       <form onSubmit={onSubmit}>
         <label htmlFor="email">Correo electrónico</label>
         <input

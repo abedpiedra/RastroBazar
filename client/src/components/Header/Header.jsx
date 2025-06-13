@@ -35,13 +35,16 @@ const Header = () => {
       </div>
       <ul>
         <li>
-          <Link to="/AgendaDeBox"></Link>
+          <Link to="/notificaciones">Alertas</Link>
         </li>
         <li>
           <Link to="/AdministrarProveedores">Administrar Proveedores</Link>
         </li>
         <li>
           <Link to="/AdministrarProducts">Administrar Productos</Link>
+        </li>
+        <li>
+          <Link to="/GenerarVenta">Generar Venta</Link>
         </li>
         <li>
         <button onClick={handleLogout} className="btn btn-danger">

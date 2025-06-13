@@ -1,4 +1,6 @@
 import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 
@@ -11,60 +13,81 @@ import Registro1 from "./Pages/Inicio_Registro/Registro1.jsx"; // Asegúrate de 
 import Login from "./Pages/Inicio_Registro/Login.jsx";
 
 //Administrar
-import AdministrarProveedores from "./Pages/Administrar/AdministrarProovedores/AdministrarProveedores.jsx";
+import AdministrarProveedores from "./Pages/Administrar/AdministrarProveedores/AdministrarProveedores.jsx";
 import AdministrarProducts from "./Pages/Administrar/AdministrarProducts/AdministrarProducts.jsx";
 
-// Agendar
-import AgendaDeBox from "./Pages/Agendar/AgendaBox/AgendaDeBox.jsx";
-import MapaBox from "./Pages/Agendar/Mapa_Box/Mapa_box.jsx";
-import Cita_agenda from "./Pages/Agendar/Cita_agenda/Cita_agenda.jsx";
-import Registro_sesion from "./Pages/Agendar/Registro_sesion/Registro_sesion.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { NotificacionesProvider } from "./context/NotificacionesContext.jsx";
 
-
-import CrearProveedores from "./Pages/Administrar/AdministrarProovedores/CrearProveedores.jsx";
+import CrearProveedores from "./Pages/Administrar/AdministrarProveedores/CrearProveedores.jsx";
 import CrearProducts from "./Pages/Administrar/AdministrarProducts/CrearProducts.jsx";
 
 //Editar
-import EditarProveedores from "./Pages/Administrar/AdministrarProovedores/EditarProveedores.jsx";
-import EditarProducts from "./Pages/Administrar/AdministrarProducts/EditarProducts.jsx";
+import EditarProveedores from "./Pages/Administrar/AdministrarProveedores/EditarProveedores.jsx";
+import EditarProductos from "./Pages/Administrar/AdministrarProducts/EditarProducts.jsx";
+import AlertaNotificacion from "./Pages/Alertas/AlertaNotificacion.jsx"; // Asegúrate de que la ruta sea correcta
+
+//Ventas y Boletas
+import GenerarVentas from "./Pages/VentasBoletas/GenerarVentas.jsx"; // Asegúrate de que la ruta sea correcta
 
 function App() {
   return (
     <AuthProvider>
-      <div className="App">
-        <BrowserRouter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/Registro1" element={<Registro1 />} />
+      <NotificacionesProvider>
+        <div className="App">
+          <BrowserRouter>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/Registro1" element={<Registro1 />} />
 
-              {/* banners */}
-              <Route path="/home" element={<Home />} />
+                {/* banners */}
+                <Route path="/home" element={<Home />} />
 
-              <Route
-                path="/AdministrarProveedores"
-                element={<AdministrarProveedores />}
-              />
-              <Route path="/AdministrarProducts" element={<AdministrarProducts/>} />
+                <Route
+                  path="/AdministrarProveedores"
+                  element={<AdministrarProveedores />}
+                />
+                <Route
+                  path="/AdministrarProducts"
+                  element={<AdministrarProducts />}
+                />
 
-              {/* Agendar*/}
-              <Route path="/AgendaDeBox" element={<AgendaDeBox />} />
-              <Route path="/Mapa_box" element={<MapaBox />} />
-              <Route path="/Cita_agenda" element={<Cita_agenda />} />
-              <Route path="/Registro_sesion" element={<Registro_sesion />} />
+                {/* crear*/}
+                <Route
+                  path="/CrearProveedores"
+                  element={<CrearProveedores />}
+                />
+                <Route path="/CrearProducts" element={<CrearProducts />} />
 
-              {/* crear*/}
-              <Route path="/CrearProveedores" element={<CrearProveedores />} />
-              <Route path="/CrearProducts" element={<CrearProducts />} />
-
-              {/* Editar*/}
-              <Route path="/EditarProveedores/:id" element={<EditarProveedores />} />
-              <Route path="/EditarProducts/:id" element={<EditarProducts />} />
-            </Routes>
-          </Layout>
-        </BrowserRouter>
-      </div>
+                {/* Editar*/}
+                <Route
+                  path="/EditarProveedores/:id"
+                  element={<EditarProveedores />}
+                />
+                <Route
+                  path="/EditarProducto/:id"
+                  element={<EditarProductos />}
+                />
+                <Route path="/notificaciones" element={<AlertaNotificacion />} />
+                <Route path="/GenerarVenta" 
+                element={<GenerarVentas />} />
+              </Routes>
+            </Layout>
+          </BrowserRouter>
+          <ToastContainer 
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+        </div>
+      </NotificacionesProvider>
     </AuthProvider>
   );
 }

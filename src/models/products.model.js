@@ -5,6 +5,11 @@ import mongoose from "mongoose";
 // colección de productos
 const userSchema = new mongoose.Schema(
   {
+    // Sucursal a la que pertenece el producto
+    proveedor: {
+      type: String,
+      required: true,
+    },
     // Nombre del producto
     nombre: {
       type: String,
@@ -13,22 +18,20 @@ const userSchema = new mongoose.Schema(
     // Descripción del producto
     descripcion: {
       type: String,
-      required: true,
     },
     // Cantidad en stock del producto
     stock: {
-      type: String,
+      type: Number,
       required: true,
     },
     // Precio del producto
     precio: {
-      type: String,
+      type: Number,
       required: true,
     },
-    // Sucursal a la que pertenece el producto
-    proveedor: {
-      type: String,
-      required: true,
+    umbral: {
+      type: Number,
+      default: 10, // Umbral de stock para alertas
     },
   },
   {

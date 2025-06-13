@@ -1,0 +1,25 @@
+.notificaciones-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+}
+
+.notificacion {
+  background-color: #ffcccc;
+  border: 1px solid #ff0000;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notificacion button {
+  background: none;
+  border: none;
+  font-weight: bold;
+  color: #900;
+  cursor: pointer;
+}

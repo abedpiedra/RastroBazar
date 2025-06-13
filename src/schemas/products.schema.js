@@ -1,6 +1,9 @@
 import { z } from "zod";
 
 export const productoSchema = z.object({
+  proveedor: z.string({
+    required_error: "proveedor is required",
+  }),
   nombre: z.string({
     required_error: "name is required",
   }),
@@ -12,8 +15,6 @@ export const productoSchema = z.object({
   }),
   precio: z.string({
     required_error: "precio is required",
-  }),
-  proveedor: z.string({
-    required_error: "proveedor is required",
-  }),
+  }),  
+   umbral: z.number().optional(),
 });

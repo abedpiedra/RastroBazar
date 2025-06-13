@@ -10,3 +10,6 @@ export const productsRequest = () => axios.get(`${API}/products`);
 export const deleteProducto = (_id) => axios.delete(`${API}/deleteProducts/${_id}`);   
 // Función para eliminar un producto por su ID
 export const obtenerProductoPorId = (id) => axios.get(`${API}/products/${id}`);
+
+export const actualizarProducto = (id, productoData) =>
+  axios.put(`${API}/products/${id}`, productoData);
