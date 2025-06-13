@@ -29,6 +29,7 @@ import AlertaNotificacion from "./Pages/Alertas/AlertaNotificacion.jsx"; // Aseg
 
 //Ventas y Boletas
 import GenerarVentas from "./Pages/VentasBoletas/GenerarVentas.jsx"; // Asegúrate de que la ruta sea correcta
+import HistorialVentas from "./Pages/VentasBoletas/HistoriaVentas.jsx";
 
 function App() {
   return (
@@ -69,13 +70,16 @@ function App() {
                   path="/EditarProducto/:id"
                   element={<EditarProductos />}
                 />
-                <Route path="/notificaciones" element={<AlertaNotificacion />} />
-                <Route path="/GenerarVenta" 
-                element={<GenerarVentas />} />
+                <Route
+                  path="/notificaciones"
+                  element={<AlertaNotificacion />}
+                />
+                <Route path="/GenerarVenta" element={<GenerarVentas />} />
+                <Route path="/HistorialVenta" element={<HistorialVentas />} />
               </Routes>
             </Layout>
           </BrowserRouter>
-          <ToastContainer 
+          <ToastContainer
             position="top-right"
             autoClose={5000}
             hideProgressBar={false}

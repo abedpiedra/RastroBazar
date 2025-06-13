@@ -18,8 +18,8 @@ const AdministrarProveedores = () => {
       text: `¿Eliminar "${apellido} ${nombre}"?`,
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#3298dc",
-      cancelButtonColor: "#f14668",
+      confirmButtonColor: "#c83968",
+      cancelButtonColor: "#eb3f75",
       confirmButtonText: "Sí, eliminar",
     });
 
@@ -27,7 +27,7 @@ const AdministrarProveedores = () => {
       try {
         const { data } = await deleteProveedor(_id);
         if (data.status === "ok") {
-          toast("Médico eliminado correctamente", { autoClose: 2000 });
+          toast("Proveedor eliminado correctamente", { autoClose: 2000 });
           setProveedores((prevProveedores) =>
             prevProveedores.filter((proveedor) => proveedor._id !== _id)
           );
@@ -35,7 +35,7 @@ const AdministrarProveedores = () => {
           toast.error("Error eliminando. Intenta de nuevo.");
         }
       } catch (error) {
-        setError("No se pudo eliminar el médico. Intenta de nuevo.");
+        setError("No se pudo eliminar al proveedor. Intenta de nuevo.");
       }
     }
   };
@@ -53,16 +53,17 @@ const AdministrarProveedores = () => {
   }, []);
 
   return (
-    <div className={`${styles.container} mt-4`}>
-      <div className={styles.headerButton}>
-        <button className="btn btn-primary" onClick={handleAgregarClick}>
+    <div className={`container-a mt-4`}>
+      <div className="">
+        <h3>Proveedores</h3>
+        <button className="boton-Agregar" onClick={handleAgregarClick}>
           Agregar
         </button>
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="table-responsive mt-3">
-        <table className="table table-bordered">
-          <thead className="table-light">
+        <table className="table-interior">
+          <thead className="">
             <tr>
               <th>N</th>
               <th>Nombre de Empresa</th>
@@ -83,7 +84,7 @@ const AdministrarProveedores = () => {
                 <td>{proveedor.email}</td>
                 <td>
                   <button
-                    className="btn btn-danger btn-sm"
+                    className="boton-Agregar"
                     onClick={() => navigate(`/EditarProveedores/${proveedor._id}`)}
                   >
                     Editar
@@ -91,7 +92,7 @@ const AdministrarProveedores = () => {
                 </td>
                 <td>
                   <button
-                    className="btn btn-danger btn-sm"
+                    className="boton-Eliminar"
                     onClick={() =>
                       eliminar(proveedor._id, proveedor.nombre_empresa, proveedor.email)
                     }

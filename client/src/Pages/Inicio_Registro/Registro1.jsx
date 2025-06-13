@@ -23,7 +23,7 @@ function Registro1() {
   });
 
   return (
-    <div className={`${styles.container} mt-4`}>
+    <div className="container-a mt-5">
       <img
         className="logo"
         src=""
@@ -75,7 +75,7 @@ function Registro1() {
         />
 
         {errors.password && <p>password is required</p>}
-        <button type="submit">Registrar</button>
+        <button className="boton-Agregar" type="submit">Registrar</button>
       </form>
       <p className="signup-link">
         ¿Tienes cuenta?

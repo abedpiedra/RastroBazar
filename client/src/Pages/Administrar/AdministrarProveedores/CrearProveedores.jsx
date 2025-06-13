@@ -46,7 +46,7 @@ function CrearProveedores() {
   };
 
   return (
-    <div className={`${styles.container} mt-4`}>
+    <div className={`container-a mt-4`}>
       {registerErrors.map((error, i) => (
         <div key={i} className="alert alert-danger">
           {error}
@@ -101,7 +101,7 @@ function CrearProveedores() {
           <p className="text-danger">{errors.Correo.message}</p>
         )}
 
-        <button type="submit" className="btn btn-primary mt-3">
+        <button type="submit" className="boton-Agregar">
           Agregar
         </button>
       </form>

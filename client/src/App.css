@@ -9,6 +9,7 @@
   }
 }
 
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -60,5 +61,118 @@
   border-radius: 10px;
   background-color: #f7e29f;
   transition : 1s ease;
+}
+
+
+.App {
+  background-color: #ffe7fb; /* rosa palo */
+  min-height: 100vh;         /* para que ocupe toda la pantalla */
+  margin: 0;
+  padding: 0;
+}
+
+
+.table-interior {
+  width: 100%;
+  border-collapse: collapse; /* evita bordes dobles */
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+.table-interior th,
+.table-interior td {
+  border: 1px solid #c0bfbf; /* borde gris claro */
+  padding: 10px 15px;     /* espacio interno */
+  text-align: left;
+}
+
+.table-interior thead {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+.table-interior tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+
+.option{
+ background-color: black;
+}
+
+.container-a{
+    width: 80%; 
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffe0f0; /* Rosa palo */
+}
+.container-a input,
+.container-a select,
+.container-a textarea {
+  background-color: #fff6f9;
+  border: 1px solid #d68aad;
+  color: #5a1a3b;
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.container-a input:focus,
+.container-a select:focus,
+.container-a textarea:focus {
+  background-color: #ffd6e8;
+  outline: none;
+  border-color: #a04d7e;
+}
+
+.container-a label {
+  color: #5a1a3b;
+  font-weight: 600;
+  margin-top: 10px;
+  display: block;
+}
+
+.boton-Eliminar {
+  background-color: #ff7da6; /* Rosa */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.boton-Eliminar:hover {
+  background-color: #e76b95; /* Un tono más oscuro al pasar el mouse */
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+
+.boton-Agregar {
+  background-color: #eb3f75; /* Rosa */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.boton-Agregar:hover {
+  background-color: #bb174e; /* Un tono más oscuro al pasar el mouse */
+  transform: scale(1.05);
+  cursor: pointer;
 }
 

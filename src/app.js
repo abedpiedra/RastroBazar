@@ -10,16 +10,21 @@ import productoRoutes from "./routes/products.routes.js";
 import cors from "cors";
 import alertasRoutes from "./routes/alertastocks.routes.js";
 import notificacionesRoutes from "./routes/notificaciones.routes.js";
-import ventasRoutes from "./routes/ventas.routes.js";  // <--- Importa la ruta de ventas
+import ventasRoutes from "./routes/ventas.routes.js"; 
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const app = express();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(
   cors({
     origin: "http://localhost:5173",
-    credentials: true, // Permite que las cookies sean enviadas y recibidas
+    credentials: true,
   })
 );
 
@@ -34,5 +39,8 @@ app.use("/api", productoRoutes);
 app.use("/api", alertasRoutes);
 app.use("/api", notificacionesRoutes);
 app.use("/api", ventasRoutes); 
+
+// Esta línea es la clave para servir los PDFs en la URL que usas desde frontend:
+app.use('/api/ventas/pdfs', express.static(path.join(__dirname, 'pdfs', 'ventas')));
 
 export default app;

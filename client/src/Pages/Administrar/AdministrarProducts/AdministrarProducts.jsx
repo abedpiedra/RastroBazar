@@ -19,8 +19,8 @@ const AdministrarProducts = () => {
       text: `¿Eliminar "producto ${nombre}"?`,
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#3298dc",
-      cancelButtonColor: "#f14668",
+      confirmButtonColor: "#c83968",
+      cancelButtonColor: "#eb3f75",
       confirmButtonText: "Sí, eliminar",
     });
 
@@ -101,21 +101,22 @@ const AdministrarProducts = () => {
   }, []);
 
   return (
-    <div className={`${styles.container} mt-4`}>
-      <div className="d-flex gap-2 mb-3">
-        <button className="btn btn-primary" onClick={handleAgregarClick}>
+    <div className={`container-a mt-4`}>
+      <div className="">
+        <h3>Productos</h3>
+        <button className="boton-Agregar" onClick={handleAgregarClick}>
           Agregar
         </button>
-        <button className="btn btn-warning" onClick={verificarStock}>
+        <button className="boton-Eliminar" onClick={verificarStock}>
           Verificar Stock
         </button>
       </div>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div className="table-responsive mt-3">
-        <table className="table table-bordered">
-          <thead className="table-light">
+      <div className="">
+        <table className="table-interior">
+          <thead className="">
             <tr>
               <th>ID</th>
               <th>Nombre de Producto</th>
@@ -138,7 +139,7 @@ const AdministrarProducts = () => {
                 <td>{producto.proveedor}</td>
                 <td>
                   <button
-                    className="btn btn-danger btn-sm"
+                    className="boton-Agregar"
                     onClick={() => navigate(`/EditarProducto/${producto._id}`)}
                   >
                     Editar
@@ -146,7 +147,7 @@ const AdministrarProducts = () => {
                 </td>
                 <td>
                   <button
-                    className="btn btn-danger btn-sm"
+                    className="boton-Eliminar"
                     onClick={() => eliminar(producto._id, producto.nombre)}
                   >
                     Eliminar

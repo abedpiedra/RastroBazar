@@ -25,7 +25,7 @@ function Login() {
   });
 
   return (
-    <div className={`${styles.container} mt-4`}>
+    <div className="container-a mt-5">
       {signinErrors.map((error, i) => (
         <div key={i}>{error}</div>
       ))}
@@ -53,7 +53,7 @@ function Login() {
         />
         {errors.password && <p>password is required</p>}
 
-        <button type="submit">Iniciar Sesión</button>
+        <button className="boton-Agregar" type="submit">Iniciar Sesión</button>
         <p className="signup-link">
           ¿No tienes cuenta? <Link to="/Registro1">Regístrate aquí</Link>{" "}
           {/* Usa Link */}

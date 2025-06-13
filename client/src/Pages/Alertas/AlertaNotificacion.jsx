@@ -55,7 +55,7 @@ const AlertaNotificacion = () => {
   };
 
   return (
-    <div className="alertas-container">
+    <div className="container-a mt-4">
       <h3>Notificaciones</h3>
       {notificaciones.map((notif) => (
         <div key={notif._id} className="alert alert-warning d-flex justify-content-between align-items-center">
@@ -69,7 +69,7 @@ const AlertaNotificacion = () => {
       ))}
 
       <h4 className="mt-4">Configurar umbral por producto</h4>
-      <table className="table">
+      <table className="table-interior">
         <thead>
           <tr>
             <th>Producto</th>
@@ -91,7 +91,7 @@ const AlertaNotificacion = () => {
               </td>
               <td>
                 <button
-                  className="btn btn-primary btn-sm"
+                  className="boton-Agregar"
                   onClick={() => handleGuardarUmbral(producto._id)}
                 >
                   Guardar

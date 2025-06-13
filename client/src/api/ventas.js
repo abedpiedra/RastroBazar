@@ -8,7 +8,7 @@ export const crearVentaRequest = (venta) =>
 
 // Obtener todas las ventas (si lo necesitas)
 export const obtenerVentasRequest = () =>
-  axios.get(`${API}/ventas`);
+  axios.get(`${API}/ventas/`);
 
 // Obtener venta por ID
 export const obtenerVentaPorId = (id) =>

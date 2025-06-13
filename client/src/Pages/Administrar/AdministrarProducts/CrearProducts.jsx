@@ -61,7 +61,7 @@ function CrearProducts() {
   };
 
   return (
-    <div className={`${styles.container} mt-4`}>
+    <div className={`container-a mt-4`}>
       {registerErrors.map((error, i) => (
         <div key={i} className="alert alert-danger">
           {error}
@@ -152,13 +152,13 @@ function CrearProducts() {
           <p className="text-danger">{errors.precio.message}</p>
         )}
 
-        <button type="submit" className="btn btn-primary mt-3">
+        <button type="submit" className="boton-Agregar">
           Agregar
         </button>
       </form>
       <p className="mt-3">
         <button
-          className="btn btn-danger"
+          className="boton-Eliminar"
           onClick={() => navigate("/AdministrarProducts")}
         >
           Volver a Administrar Products

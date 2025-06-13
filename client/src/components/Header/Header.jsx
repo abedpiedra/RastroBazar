@@ -1,5 +1,5 @@
 import React from "react";
-import "./Header.module.css";
+import styles from "./Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
@@ -47,10 +47,14 @@ const Header = () => {
           <Link to="/GenerarVenta">Generar Venta</Link>
         </li>
         <li>
-        <button onClick={handleLogout} className="btn btn-danger">
+          <Link to="/HistorialVenta">Historial Venta</Link>
+        </li>
+        <li>
+        
+        </li>
+        <button onClick={handleLogout} className={styles["boton-logout"]}>
         Logout
       </button>
-        </li>
       </ul>
       
     </header>

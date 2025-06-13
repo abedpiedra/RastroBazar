@@ -53,7 +53,7 @@ function EditarProducto() {
   }
 
   return (
-    <div className={`${styles.container} mt-4`}>
+    <div className={`container-a mt-4`}>
       {registerErrors.map((error, i) => (
         <div key={i} className="alert alert-danger">
           {error}
@@ -79,14 +79,14 @@ function EditarProducto() {
         {errors.precio && (
           <p className="text-danger">{errors.precio.message}</p>
         )}
-        <button type="submit" className="btn btn-primary mt-3">
+        <button type="submit" className="boton-Agregar">
           Guardar Cambios
         </button>
       </form>
 
       <p className="mt-3">
         <button
-          className="btn btn-danger"
+          className="boton-Eliminar"
           onClick={() => navigate("/AdministrarProveedores")}
         >
           Volver a Administrar Proveedores
