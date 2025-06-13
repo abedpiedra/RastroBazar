@@ -89,7 +89,7 @@ function CrearProducts() {
               </option>
             ))
           ) : (
-            <option disabled>No hay sucursales disponibles</option>
+            <option disabled>No hay sucursales disponibles.</option>
           )}
         </select>
         {errors.nombre_empresa && (
