@@ -9,6 +9,7 @@ function CrearProducts() {
     register,
     handleSubmit,
     formState: { errors },
+    // setError,
   } = useForm();
   const navigate = useNavigate();
   const [registerErrors, setRegisterErrors] = useState([]);
@@ -61,6 +62,7 @@ function CrearProducts() {
   };
 
   return (
+    // Renderizar el formulario de registro de productos
     <div className={`container-a mt-4`}>
       {registerErrors.map((error, i) => (
         <div key={i} className="alert alert-danger">
@@ -78,8 +80,8 @@ function CrearProducts() {
           })}
         >
           <option value="" disabled>
-            {" "}
-            {/* Establecer la opción seleccionada por defecto */}
+            {""}
+            /* Establecer la opción seleccionada por defecto */
             Selecciona una sucursal
           </option>
           {Proveedors.length > 0 ? (
@@ -124,9 +126,7 @@ function CrearProducts() {
           {...register("stock", { required: "Este campo es requerido" })}
           defaultValue=""
         />
-        {errors.stock && (
-          <p className="text-danger">{errors.stock.message}</p>
-        )}
+        {errors.stock && <p className="text-danger">{errors.stock.message}</p>}
 
         <label htmlFor="precio">Precio</label>
         <div style={{ position: "relative" }}>

@@ -3,6 +3,7 @@ import { registerRequest, loginRequest } from "../api/auth.js";
 
 export const AuthContext = createContext();
 
+// Hook personalizado para usar el contexto Auth
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -16,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
 
+  // Registro de usuario
   const signup = async (user) => {
     try {
       const res = await registerRequest(user);
@@ -23,28 +25,28 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setErrors([]); // Limpiar errores si el registro es exitoso
     } catch (error) {
-      console.error("Detalles del error:", error.response); // Imprime el error en la consola
+      console.error("Detalles del error:", error.response);
 
-      // Verifica si el error tiene un array de mensajes y lo establece en el estado de errores
+      // Validar que exista error.response y data para evitar errores inesperados
       if (Array.isArray(error.response?.data)) {
         setErrors(error.response.data);
       } else {
-        // Mensaje de error alternativo
         setErrors(["Error desconocido"]);
       }
     }
   };
 
+  // Inicio de sesión
   const signin = async (user) => {
     try {
       const res = await loginRequest(user);
-      console.log(res);
       if (res.status === 200) {
         setUser(res.data);
-        setIsAuthenticated(true); // Esto debería evitar el bucle
+        setIsAuthenticated(true);
       }
     } catch (error) {
-      if (Array.isArray(error.response.data)) {
+      // Verifica que exista error.response.data y sea array, sino muestra mensaje genérico
+      if (Array.isArray(error.response?.data)) {
         setErrors(error.response.data);
       } else {
         setErrors([

@@ -1,19 +1,20 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import Header from '../Header/Header.jsx'; // Asegúrate de que la ruta sea correcta
+import Header from '../Header/Header.jsx'; // Verifica que la ruta sea correcta
 
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  console.log('Current location:', location.pathname);
-  console.log('Children:', children);
+  // Opciones para no mostrar el Header
+  const noHeaderRoutes = ['/', '/Registro1'];
+
+  // Comprueba si la ruta actual está en la lista
+  const shouldShowHeader = !noHeaderRoutes.includes(location.pathname);
 
   return (
     <div>
-      {/* No muestra Header si está en /login o /Registro1 */}
-      {location.pathname !== '/' && location.pathname !== '/Registro1' && (
-        <Header />
-      )}
+      {/* Renderiza Header solo si la ruta actual no está en noHeaderRoutes */}
+      {shouldShowHeader && <Header />}
       <main>{children}</main>
     </div>
   );

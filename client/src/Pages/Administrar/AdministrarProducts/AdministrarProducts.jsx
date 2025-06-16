@@ -11,8 +11,10 @@ const AdministrarProducts = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Función para manejar el click en "Agregar"
   const handleAgregarClick = () => navigate("/CrearProducts");
 
+  // Función para eliminar un producto
   const eliminar = async (_id, nombre) => {
     const { isConfirmed } = await Swal.fire({
       title: "Confirmación",
@@ -24,11 +26,13 @@ const AdministrarProducts = () => {
       confirmButtonText: "Sí, eliminar",
     });
 
+    // Si el usuario confirma la eliminación
     if (isConfirmed) {
       try {
         const { data } = await deleteProducto(_id);
         if (data.message === "Producto eliminado correctamente") {
           toast("Producto eliminado correctamente", { autoClose: 2000 });
+          // Actualizar el estado para eliminar el producto de la lista
           setProducts((prev) =>
             prev.filter((producto) => producto._id !== _id)
           );
@@ -41,6 +45,7 @@ const AdministrarProducts = () => {
     }
   };
 
+  // Función para verificar el stock de los productos
   const verificarStock = async () => {
     try {
       // 1. Llamas a la API para refrescar o verificar alertas si es necesario
@@ -68,6 +73,7 @@ const AdministrarProducts = () => {
     }
   };
 
+  // Efecto para cargar los productos al montar el componente
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -78,6 +84,7 @@ const AdministrarProducts = () => {
         data.forEach((producto) => {
           if (producto.stock < producto.umbral) {
             const toastId = `stock-${producto._id}`;
+            // Solo mostramos la alerta si no está activa
             if (!toast.isActive(toastId)) {
               toast.warn(
                 `Producto "${producto.nombre}" está bajo en stock: ${producto.stock}`,
@@ -100,6 +107,7 @@ const AdministrarProducts = () => {
     fetchProducts();
   }, []);
 
+  // Renderizar la tabla de productos
   return (
     <div className={`container-a mt-4`}>
       <div className="">

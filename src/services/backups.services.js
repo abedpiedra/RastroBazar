@@ -8,11 +8,17 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Asegurarse de que la carpeta de backups existe
 export const generarBackup = async () => {
+  // Crear carpeta de backups si no existe
   try {
+    // Verificar si la carpeta de backups ya existe
     const fecha = new Date().toISOString().replace(/[:.]/g, "-");
+    // Ruta de la carpeta de backups
     const backupFolder = path.join(__dirname, "..", "backups", `backup-${fecha}`);
+    // Verificar si la carpeta ya existe
     const dbBackupFolder = path.join(backupFolder, "db");
+    // Ruta de la carpeta de PDFs
     const pdfsFolder = path.join(backupFolder, "pdfs");
 
     // Crear carpetas
@@ -23,7 +29,9 @@ export const generarBackup = async () => {
     const dbUri = process.env.MONGODB_URI || "mongodb://localhost:27017/rastrobazar";  // ajusta aquí
     const cmd = `mongodump --uri="${dbUri}" --out="${dbBackupFolder}"`;
 
+    // Ejecutar el comando de backup
     await new Promise((resolve, reject) => {
+      // Ejecutar el comando mongodump
       exec(cmd, (error, stdout, stderr) => {
         if (error) {
           console.error("Error al ejecutar mongodump:", stderr);
@@ -37,6 +45,7 @@ export const generarBackup = async () => {
 
     // Copiar PDFs
     const pdfsPath = path.join(__dirname, "..", "pdfs");
+    // Verificar si la carpeta de PDFs existe
     await fs.cp(pdfsPath, pdfsFolder, { recursive: true });
 
     return { message: "Backup generado con éxito", ruta: backupFolder };

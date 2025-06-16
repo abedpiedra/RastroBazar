@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function BackupConfig() {
+  // Estado para el intervalo de respaldo y el archivo seleccionado
   const [intervalo, setIntervalo] = useState(
     localStorage.getItem("backupInterval") || 10
   );
   const [file, setFile] = useState(null);
 
+  // Funciones para manejar la configuración de respaldo
   const guardarConfiguracion = async () => {
     try {
+      // Validar que el intervalo sea un número positivo
       await axios.post("http://localhost:4000/api/config", {
         intervalo: parseInt(intervalo),
       });
+      // Guardar en localStorage
       localStorage.setItem("backupInterval", intervalo);
       alert("Configuración guardada correctamente.");
     } catch (error) {
@@ -19,24 +23,26 @@ function BackupConfig() {
       alert("Error al guardar configuración");
     }
   };
-
+  // Función para respaldar ahora
   const respaldarAhora = () => {
     window.open("http://localhost:4000/api/backup");
   };
 
+  // Función para cargar un backup
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
+  // Función para cargar el backup seleccionado
   const cargarBackup = async () => {
     if (!file) {
       alert("Selecciona un archivo de respaldo");
       return;
     }
-
+    // Crear un FormData para enviar el archivo
     const formData = new FormData();
     formData.append("backup", file);
-
+    // Enviar el archivo al servidor
     try {
       await axios.post("http://localhost:4000/api/restore", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -48,29 +54,31 @@ function BackupConfig() {
     }
   };
 
+  // Renderizar el componente
   return (
     <div className="container-a mt-3">
       <h2>Configuración de Respaldos</h2>
-
       <div className="mt-3">
         <label>Intervalo de respaldo automático (minutos):</label>
+        // Input para el intervalo de respaldo
         <input
           type="number"
           value={intervalo}
           onChange={(e) => setIntervalo(e.target.value)}
         />
+        // Botón para guardar la configuración
         <button className="boton-Agregar" onClick={guardarConfiguracion}>
           Guardar Configuración
         </button>
       </div>
-
+      // Botón para respaldar ahora
       <div className="mt-3">
         <h4>Respaldar ahora:</h4>
         <button className="boton-Agregar" onClick={respaldarAhora}>
           Generar Respaldo
         </button>
       </div>
-
+      // Sección para cargar un respaldo
       <div className="mt-3">
         <h4>Cargar respaldo:</h4>
         <input

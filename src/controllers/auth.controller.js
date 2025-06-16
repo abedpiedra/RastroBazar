@@ -1,17 +1,23 @@
+// Importación del modelo de usuario y utilidades necesarias
 import User from "../models/user.model.js";
-import bcrypt from "bcryptjs";
-import { createAccessToken } from "../libs/jwt.js";
+import bcrypt from "bcryptjs"; // Para el hash de contraseñas
+import { createAccessToken } from "../libs/jwt.js"; // Función para crear tokens JWT
 
+// Registro de nuevos usuarios
 export const register = async (req, res) => {
   const { username, email, rol, password } = req.body;
 
   try {
+    // Verifica si el correo ya está registrado
     const userFound = await User.findOne({ email });
 
-    if (userFound) return res.status(400).json(["the email is already in use"]);
+    if (userFound)
+      return res.status(400).json(["the email is already in use"]);
 
-    const passwordhash = await bcrypt.hash(password, 10); // #string cualquiera
+    // Hashea la contraseña con un salt de 10 rondas
+    const passwordhash = await bcrypt.hash(password, 10);
 
+    // Crea una nueva instancia de usuario
     const newUser = new User({
       username,
       email,
@@ -19,10 +25,16 @@ export const register = async (req, res) => {
       password: passwordhash,
     });
 
+    // Guarda el usuario en la base de datos
     const userSaved = await newUser.save();
+
+    // Genera un token JWT usando el ID del usuario
     const token = await createAccessToken({ id: userSaved._id });
 
+    // Guarda el token en una cookie
     res.cookie("token", token);
+
+    // Devuelve la información del usuario (sin la contraseña)
     res.json({
       id: userSaved._id,
       username: userSaved.username,
@@ -32,27 +44,37 @@ export const register = async (req, res) => {
       updatedAt: userSaved.updatedAt,
     });
   } catch (error) {
+    // Manejo de errores generales
     res.status(500).json({ message: error.message });
   }
 };
 
+// Inicio de sesión de usuarios registrados
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Busca el usuario por email
     const userFound = await User.findOne({ email });
 
+    // Si no existe el usuario
     if (!userFound)
-      return res.status(400).json({ message: " User not found " });
+      return res.status(400).json({ message: "User not found" });
 
+    // Compara la contraseña ingresada con el hash guardado
     const isMatch = await bcrypt.compare(password, userFound.password);
 
+    // Si las contraseñas no coinciden
     if (!isMatch)
-      return res.status(400).json({ message: " Incorrect password" });
+      return res.status(400).json({ message: "Incorrect password" });
 
+    // Genera un token JWT para el usuario autenticado
     const token = await createAccessToken({ id: userFound._id });
 
+    // Guarda el token en una cookie
     res.cookie("token", token);
+
+    // Devuelve los datos del usuario
     res.json({
       id: userFound._id,
       username: userFound.username,
@@ -62,22 +84,30 @@ export const login = async (req, res) => {
       updatedAt: userFound.updatedAt,
     });
   } catch (error) {
+    // Manejo de errores generales
     res.status(500).json({ message: error.message });
   }
 };
 
+// Cierre de sesión (logout)
 export const logout = (req, res) => {
+  // Limpia la cookie del token (la expira de inmediato)
   res.cookie("token", "", {
     expires: new Date(0),
   });
-  return res.sendStatus(200);
+  return res.sendStatus(200); // OK sin contenido
 };
 
+// Perfil del usuario autenticado
 export const profile = async (req, res) => {
+  // Busca el usuario a partir del ID decodificado del token
   const userFound = await User.findById(req.user.id);
 
-  if (!userFound) return res.status(400).json({ message: "User not Found" });
+  // Si no se encuentra el usuario
+  if (!userFound)
+    return res.status(400).json({ message: "User not Found" });
 
+  // Retorna la información del perfil
   return res.json({
     id: userFound._id,
     username: userFound.username,
@@ -87,3 +117,4 @@ export const profile = async (req, res) => {
     updatedAt: userFound.updatedAt,
   });
 };
+ 

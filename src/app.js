@@ -20,9 +20,11 @@ dotenv.config();
 
 const app = express();
 
+// Obtener la ruta del archivo actual para manejo de paths relativos
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Configurar CORS para permitir solicitudes desde el frontend en localhost:5173 con credenciales
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -30,10 +32,16 @@ app.use(
   })
 );
 
+// Middleware para registro de peticiones HTTP en consola (modo dev)
 app.use(morgan("dev"));
+
+// Middleware para parsear JSON en el body de las solicitudes
 app.use(express.json());
+
+// Middleware para parsear cookies
 app.use(cookieParser());
 
+// Rutas agrupadas bajo /api para autenticación, tareas, proveedores, productos, alertas, notificaciones, ventas y backups
 app.use("/api", authRoutes);
 app.use("/api", taskRoutes);
 app.use("/api", proveedorRoutes);
@@ -44,7 +52,7 @@ app.use("/api", ventasRoutes);
 app.use("/api", backupRoutes);
 app.use("/api", backupConfigRoutes);
 
-// Esta línea es la clave para servir los PDFs en la URL que usas desde frontend:
+// Servir archivos estáticos de PDFs de ventas para acceso directo desde el frontend
 app.use('/api/ventas/pdfs', express.static(path.join(__dirname, 'pdfs', 'ventas')));
 
 export default app;

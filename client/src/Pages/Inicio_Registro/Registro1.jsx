@@ -6,31 +6,38 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Registro1() {
+  // Inicializamos react-hook-form para manejar formulario y errores
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  // Obtenemos funciones y estados desde nuestro contexto de autenticación
   const { signup, isAuthenticated, errors: registerErrors } = useAuth();
   const navigate = useNavigate();
 
+  // Si el usuario ya está autenticado, redirigimos a la página principal
   useEffect(() => {
     if (isAuthenticated) navigate("/");
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]); // agregué navigate para evitar warning
 
+  // Función para manejar el envío del formulario
   const onSubmit = handleSubmit(async (values) => {
     signup(values);
   });
 
   return (
     <div className="container-a mt-5">
+      {/* Logo: asegúrate de poner la ruta correcta o eliminar si no lo usas */}
       <img
         className="logo"
-        src=""
-        alt=""
+        src="" // Aquí deberías poner la ruta a tu logo, por ejemplo: src={logo}
+        alt="Logo RastroBazar"
       />
       <h3>Registro - RastroBazar</h3>
-      {/* Mostrar errores de registro */}
+
+      {/* Mostrar errores globales del proceso de registro */}
       {registerErrors.length > 0 && (
         <div className="alert alert-danger">
           {registerErrors.map((error, index) => (
@@ -39,47 +46,84 @@ function Registro1() {
         </div>
       )}
 
+      {/* Formulario de registro */}
       <form onSubmit={onSubmit}>
+        {/* Campo Nombre Completo */}
         <label htmlFor="username">Nombre Completo</label>
         <input
           id="username"
           type="text"
-          {...register("username", { required: true })}
           placeholder="Nombre Apellido"
           autoComplete="name"
+          {...register("username", { required: "El nombre es obligatorio" })}
         />
-        {errors.username && <p>Username is required</p>}
+        {/* Mensaje de error para username */}
+        {errors.username && <p>{errors.username.message}</p>}
+
+        {/* Campo Email */}
         <label htmlFor="email">Email</label>
         <input
           id="email"
           type="email"
-          {...register("email", { required: true })}
           placeholder="Email"
-          autoComplete="email" // Cambiado a autoComplete
+          autoComplete="email"
+          {...register("email", {
+            required: "El email es obligatorio",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // patrón simple para email válido
+              message: "Email no es válido",
+            },
+          })}
         />
-        {errors.email && <p>Email is required</p>}
+        {/* Mensaje de error para email */}
+        {errors.email && <p>{errors.email.message}</p>}
+
+        {/* Campo Rol */}
         <label htmlFor="rol">Rol</label>
-        <select id="rol" {...register("rol", { required: true })}>
-          <option value="">Selecciona un rol</option>
+        <select
+          id="rol"
+          defaultValue=""
+          {...register("rol", { required: "El rol es obligatorio" })}
+        >
+          <option value="" disabled>
+            Selecciona un rol
+          </option>
           <option value="Empleado">Empleado</option>
           <option value="Dueño">Dueño</option>
         </select>
-        {errors.rol && <p>Rol is required</p>}
+        {/* Mensaje de error para rol */}
+        {errors.rol && <p>{errors.rol.message}</p>}
+
+        {/* Campo Contraseña */}
         <label htmlFor="password">Contraseña</label>
         <input
           id="password"
           type="password"
-          {...register("password", { required: true })}
           placeholder="Mínimo 6 Caracteres"
-          autoComplete="new-password" // Cambiado a autoComplete
+          autoComplete="new-password"
+          {...register("password", {
+            required: "La contraseña es obligatoria",
+            minLength: {
+              value: 6,
+              message: "La contraseña debe tener al menos 6 caracteres",
+            },
+          })}
         />
+        {/* Mensaje de error para contraseña */}
+        {errors.password && <p>{errors.password.message}</p>}
 
-        {errors.password && <p>Password is required</p>}
-        <button className="boton-Agregar" type="submit">Registrar</button>
+        {/* Botón para enviar */}
+        <button className="boton-Agregar" type="submit">
+          Registrar
+        </button>
       </form>
+
+      {/* Enlace para ir a login si ya tiene cuenta */}
       <p className="signup-link">
-        ¿Tienes cuenta?
-        <Link to="/">Inicia Sesión</Link>
+        ¿Tienes cuenta?{" "}
+        <Link to="/">
+          Inicia Sesión
+        </Link>
       </p>
     </div>
   );

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { obtenerProveedorPorId } from "../../../api/proveedores.js"; // Asegúrate de importar correctamente la función
+import { obtenerProveedorPorId } from "../../../api/proveedores.js"; // Importar función para obtener proveedor
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import styles from "./AdministrarProveedores.module.css";
 
 function EditarProveedores() {
   const navigate = useNavigate();
-  const { id } = useParams(); // Obtenemos el ID del centro a editar
+  const { id } = useParams(); // Obtenemos el ID del proveedor a editar
   const [proveedorData, setProveedorData] = useState(null);
   const [registerErrors, setRegisterErrors] = useState([]);
 
@@ -19,9 +19,11 @@ function EditarProveedores() {
   } = useForm();
 
   useEffect(() => {
-    obtenerProveedorPorId(id) // Usamos la función para obtener el centro
+    // Cargar datos del proveedor al montar el componente
+    obtenerProveedorPorId(id)
       .then((response) => {
         setProveedorData(response.data);
+        // Seteamos los valores obtenidos en el formulario
         setValue("nombre_empresa", response.data.nombre_empresa);
         setValue("email", response.data.email);
       })
@@ -33,35 +35,39 @@ function EditarProveedores() {
 
   const onSubmit = async (values) => {
     try {
+      // Enviar datos actualizados al backend
       const response = await axios.put(
         `http://localhost:4000/api/proveedors/${id}`,
         values
       );
       console.log("Datos actualizados:", response.data);
       setRegisterErrors(["¡Datos actualizados correctamente!"]);
-      navigate("/AdministrarProveedores");
+      navigate("/AdministrarProveedores"); // Navegar de vuelta a la lista
     } catch (error) {
-      console.error("Error al actualizar el centro", error);
+      console.error("Error al actualizar el proveedor", error);
       setRegisterErrors([
-        "No se pudo actualizar el centro. Intenta nuevamente.",
+        "No se pudo actualizar el proveedor. Intenta nuevamente.",
       ]);
     }
   };
 
+  // Mostrar mensaje de carga mientras no se tengan datos
   if (!proveedorData) {
     return <p>Cargando datos del proveedor...</p>;
   }
 
   return (
     <div className={`container-a mt-4`}>
+      {/* Mostrar mensajes de error o éxito */}
       {registerErrors.map((error, i) => (
         <div key={i} className="alert alert-danger">
           {error}
         </div>
       ))}
+
       <h3>Editar Proveedor</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="nombre_empresa">nombre_empresa</label>
+        <label htmlFor="nombre_empresa">Nombre Empresa</label>
         <input
           id="nombre_empresa"
           type="text"
@@ -71,16 +77,19 @@ function EditarProveedores() {
         {errors.nombre_empresa && (
           <p className="text-danger">{errors.nombre_empresa.message}</p>
         )}
+
         <label htmlFor="email">Correo</label>
         <input
           id="email"
           type="email"
           {...register("email", { required: "Este campo es requerido" })}
-          placeholder="Ej:xxx@xxx.com"
+          placeholder="Ej: xxx@xxx.com"
         />
-        {errors.Correo && (
-          <p className="text-danger">{errors.Correo.message}</p>
+        {/* Corrección: el error debe revisarse en errors.email, no errors.Correo */}
+        {errors.email && (
+          <p className="text-danger">{errors.email.message}</p>
         )}
+
         <button type="submit" className="boton-Agregar">
           Guardar Cambios
         </button>

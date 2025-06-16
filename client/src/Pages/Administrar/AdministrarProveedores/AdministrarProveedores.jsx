@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./AdministrarProveedores.module.css";
-import { proveedoresRequest, deleteProveedor } from "../../../api/proveedores.js";
-import Swal from "sweetalert2";
-import { toast } from "react-toastify";
+import styles from "./AdministrarProveedores.module.css"; // estilos específicos del componente
+import { proveedoresRequest, deleteProveedor } from "../../../api/proveedores.js"; // funciones para API
+import Swal from "sweetalert2"; // librería para alertas bonitas
+import { toast } from "react-toastify"; // notificaciones toast
 
 const AdministrarProveedores = () => {
-  const [proveedores, setProveedores] = useState([]);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [proveedores, setProveedores] = useState([]); // estado para almacenar lista de proveedores
+  const [error, setError] = useState(""); // estado para errores
+  const navigate = useNavigate(); // hook para navegar entre rutas
 
+  // Función que navega a la página para crear un nuevo proveedor
   const handleAgregarClick = () => navigate("/CrearProveedores");
 
+  // Función para eliminar un proveedor con confirmación
   const eliminar = async (_id, apellido, nombre) => {
+    // Muestra ventana modal de confirmación
     const { isConfirmed } = await Swal.fire({
       title: "Confirmación",
-      text: `¿Eliminar "${apellido} ${nombre}"?`,
+      text: `¿Eliminar "${apellido} ${nombre}"?`, // mensaje personalizado
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#c83968",
@@ -25,28 +28,34 @@ const AdministrarProveedores = () => {
 
     if (isConfirmed) {
       try {
+        // Llamada API para eliminar proveedor
         const { data } = await deleteProveedor(_id);
         if (data.status === "ok") {
+          // Si fue exitoso, mostrar notificación y actualizar estado para remover el proveedor
           toast("Proveedor eliminado correctamente", { autoClose: 2000 });
           setProveedores((prevProveedores) =>
             prevProveedores.filter((proveedor) => proveedor._id !== _id)
           );
         } else {
+          // Si hubo error en backend, mostrar error en toast
           toast.error("Error eliminando. Intenta de nuevo.");
         }
       } catch (error) {
+        // Error en petición o red, setea mensaje de error para mostrar en UI
         setError("No se pudo eliminar al proveedor. Intenta de nuevo.");
       }
     }
   };
 
+  // Efecto que se ejecuta una vez al montar el componente para cargar proveedores
   useEffect(() => {
     const fetchProveedores = async () => {
       try {
+        // Llamada a API para obtener proveedores
         const { data } = await proveedoresRequest();
-        setProveedores(data);
+        setProveedores(data); // guarda los proveedores en estado
       } catch (error) {
-        setError(error.message);
+        setError(error.message); // guarda error para mostrar
       }
     };
     fetchProveedores();
@@ -56,11 +65,15 @@ const AdministrarProveedores = () => {
     <div className={`container-a mt-4`}>
       <div className="">
         <h3>Proveedores</h3>
+        {/* Botón para agregar nuevo proveedor */}
         <button className="boton-Agregar" onClick={handleAgregarClick}>
           Agregar
         </button>
       </div>
+
+      {/* Mostrar error si existe */}
       {error && <p style={{ color: "red" }}>{error}</p>}
+
       <div className="table-responsive mt-3">
         <table className="table-interior">
           <thead className="">
@@ -75,6 +88,7 @@ const AdministrarProveedores = () => {
             </tr>
           </thead>
           <tbody>
+            {/* Mapeo de proveedores para mostrar fila por fila */}
             {proveedores.map((proveedor, index) => (
               <tr key={proveedor._id || index}>
                 <td>{index + 1}</td>
@@ -83,6 +97,7 @@ const AdministrarProveedores = () => {
                 <td>{proveedor.telefono}</td>
                 <td>{proveedor.email}</td>
                 <td>
+                  {/* Botón para navegar a edición de proveedor */}
                   <button
                     className="boton-Agregar"
                     onClick={() => navigate(`/EditarProveedores/${proveedor._id}`)}
@@ -91,6 +106,7 @@ const AdministrarProveedores = () => {
                   </button>
                 </td>
                 <td>
+                  {/* Botón para eliminar proveedor con confirmación */}
                   <button
                     className="boton-Eliminar"
                     onClick={() =>

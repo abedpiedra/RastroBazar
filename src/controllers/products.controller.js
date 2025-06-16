@@ -1,15 +1,22 @@
+// Importa el modelo Producto y la función para generar tokens
 import Producto from "../models/products.model.js";
 import { createAccessToken } from "../libs/jwt.js";
 
-// Crear Producto
+
+// ==============================
+// Crear nuevo producto
+// ==============================
 export const producto = async (req, res) => {
-  const { proveedor, nombre, descripcion, stock, precio,  } = req.body;
+  const { proveedor, nombre, descripcion, stock, precio } = req.body;
 
   try {
+    // Verifica si ya existe un producto con el mismo nombre y proveedor
     const productoFound = await Producto.findOne({ nombre, proveedor });
 
-    if (productoFound) return res.status(400).json(["El producto ya está en uso"]);
+    if (productoFound)
+      return res.status(400).json(["El producto ya está en uso"]);
 
+    // Crea una nueva instancia del producto
     const newProducto = new Producto({
       proveedor,
       nombre,
@@ -17,9 +24,14 @@ export const producto = async (req, res) => {
       stock,
       precio,
     });
+
+    // Guarda el producto en la base de datos
     const productoSaved = await newProducto.save();
+
+    // Genera un token (aunque en productos no es habitual usar JWT)
     const token = await createAccessToken({ id: productoSaved._id });
 
+    // Envía el token por cookie y retorna el producto creado
     res.cookie("token", token);
     res.json(productoSaved);
   } catch (error) {
@@ -27,7 +39,10 @@ export const producto = async (req, res) => {
   }
 };
 
-// Obtener todos los products
+
+// ==============================
+// Obtener todos los productos
+// ==============================
 export const products = async (req, res) => {
   try {
     const products = await Producto.find();
@@ -37,14 +52,19 @@ export const products = async (req, res) => {
   }
 };
 
-// Obtener un Producto por ID
+
+// ==============================
+// Obtener un producto por ID
+// ==============================
 export const obtenerProductoPorId = async (req, res) => {
   const { id } = req.params;
   try {
     const producto = await Producto.findById(id);
+
     if (!producto) {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
+
     res.json(producto);
   } catch (error) {
     console.error("Error al obtener producto:", error);
@@ -52,7 +72,10 @@ export const obtenerProductoPorId = async (req, res) => {
   }
 };
 
-// Eliminar Producto por ID
+
+// ==============================
+// Eliminar producto por ID
+// ==============================
 export const deleteProducts = async (req, res) => {
   const { _id } = req.params;
 
@@ -69,16 +92,18 @@ export const deleteProducts = async (req, res) => {
 };
 
 
-
-// Actualizar Producto por ID
+// ==============================
+// Actualizar producto por ID
+// ==============================
 export const actualizarProducto = async (req, res) => {
   const { id } = req.params;
-  const { proveedor, nombre, descripcion, stock, precio, umbral } = req.body; // agregar umbral
+  const { proveedor, nombre, descripcion, stock, precio, umbral } = req.body; // incluye umbral
 
   try {
+    // Actualiza el producto y devuelve el nuevo documento
     const updatedProducto = await Producto.findByIdAndUpdate(
       id,
-      { proveedor, nombre, descripcion, stock, precio, umbral }, // incluir umbral
+      { proveedor, nombre, descripcion, stock, precio, umbral },
       { new: true }
     );
 
@@ -96,17 +121,20 @@ export const actualizarProducto = async (req, res) => {
 };
 
 
-
-// Actualizar umbral stock de un producto por ID
+// ==============================
+// Actualizar solo el umbral de stock de un producto
+// ==============================
 export const actualizarUmbral = async (req, res) => {
   const { id } = req.params;
   const { umbral } = req.body;
 
+  // Valida que el umbral sea un número
   if (typeof umbral !== "number") {
     return res.status(400).json({ message: "El umbral debe ser un número" });
   }
 
   try {
+    // Actualiza solo el campo 'umbral'
     const productoActualizado = await Producto.findByIdAndUpdate(
       id,
       { umbral },
@@ -117,19 +145,26 @@ export const actualizarUmbral = async (req, res) => {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
 
-    res.json({ message: "Umbral actualizado correctamente", producto: productoActualizado });
+    res.json({
+      message: "Umbral actualizado correctamente",
+      producto: productoActualizado,
+    });
   } catch (error) {
     console.error("Error al actualizar umbral:", error);
     res.status(500).json({ message: "Error interno del servidor" });
   }
 };
 
-// Obtener productos con stock menor o igual a su umbral
+
+// ==============================
+// Verificar productos con stock bajo (<= umbral)
+// ==============================
 export const verificarAlertas = async (req, res) => {
   try {
     const productos = await Producto.find();
 
-    // Filtrar productos con stock <= umbral (si no tiene umbral, usar 10 por defecto)
+    // Filtra productos cuyo stock esté igual o por debajo del umbral.
+    // Si el producto no tiene umbral definido, usa 10 como valor por defecto.
     const alertas = productos.filter((p) => {
       const umbral = p.umbral ?? 10;
       return p.stock <= umbral;

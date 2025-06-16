@@ -7,6 +7,7 @@ import { crearVentaRequest } from "../../api/ventas.js";
 import { toast } from "react-toastify";
 
 function CrearVenta() {
+  // Configuración de react-hook-form con valores por defecto
   const {
     register,
     handleSubmit,
@@ -22,13 +23,15 @@ function CrearVenta() {
   });
 
   const navigate = useNavigate();
-  const [productos, setProductos] = useState([]);
-  const [carrito, setCarrito] = useState([]);
-  const [registerErrors, setRegisterErrors] = useState([]);
-  const [pdfFile, setPdfFile] = useState(null); // <-- Estado para el nombre PDF
+  const [productos, setProductos] = useState([]); // Productos disponibles para la venta
+  const [carrito, setCarrito] = useState([]); // Lista de productos agregados a la venta
+  const [registerErrors, setRegisterErrors] = useState([]); // Errores para mostrar en UI
+  const [pdfFile, setPdfFile] = useState(null); // Nombre del archivo PDF generado para descarga
 
+  // Obtener el valor actual del tipoDocumento para mostrar campos condicionales
   const tipoDocumento = watch("tipoDocumento", "boleta");
 
+  // Efecto para cargar productos al montar el componente
   useEffect(() => {
     const cargarProductos = async () => {
       try {
@@ -41,14 +44,19 @@ function CrearVenta() {
     cargarProductos();
   }, []);
 
+  // Función para agregar un producto al carrito de venta
   const agregarProducto = (data) => {
+    // Buscar producto seleccionado entre los productos disponibles
     const productoSeleccionado = productos.find(
       (p) => p._id === data.productoId
     );
     if (!productoSeleccionado) return;
 
+    // Verificar si el producto ya está en el carrito
     const existe = carrito.find((item) => item.productoId === data.productoId);
+
     if (existe) {
+      // Si existe, actualizar la cantidad sumando la nueva cantidad
       setCarrito(
         carrito.map((item) =>
           item.productoId === data.productoId
@@ -61,6 +69,7 @@ function CrearVenta() {
         )
       );
     } else {
+      // Si no existe, agregar nuevo producto al carrito
       setCarrito([
         ...carrito,
         {
@@ -71,19 +80,24 @@ function CrearVenta() {
         },
       ]);
     }
+    // Resetear formulario de agregar producto
     reset({ productoId: "", cantidadVendida: 1 });
   };
 
+  // Función para eliminar un producto del carrito
   const eliminarProducto = (productoId) => {
     setCarrito(carrito.filter((item) => item.productoId !== productoId));
   };
 
+  // Función para realizar la venta con los datos del formulario
   const realizarVenta = async (formulario) => {
+    // Validar que haya al menos un producto en el carrito
     if (carrito.length === 0) {
       toast.error("Debe agregar al menos un producto");
       return;
     }
 
+    // Construir payload con productos vendidos y datos del cliente/documento
     const ventaPayload = {
       productosVendidos: carrito.map((item) => ({
         productoId: item.productoId,
@@ -96,11 +110,11 @@ function CrearVenta() {
     };
 
     try {
-      // Asumo que crearVentaRequest devuelve un objeto con pdfFile
+      // Enviar solicitud para crear la venta
       const response = await crearVentaRequest(ventaPayload);
       toast.success("Venta realizada correctamente");
 
-      // Guardar nombre del archivo PDF para mostrar el botón
+      // Si se genera PDF, guardar nombre para mostrar botón de descarga
       if (response.pdfFile) {
         setPdfFile(response.pdfFile);
       }
@@ -109,7 +123,7 @@ function CrearVenta() {
       setCarrito([]);
       reset();
 
-      // Opcional: navegar a otro lado o dejar aquí
+      // Opcional: navegar a otra pantalla
       // navigate("/AdministrarProducts");
     } catch (error) {
       console.error("Error al realizar venta:", error);
@@ -117,6 +131,7 @@ function CrearVenta() {
     }
   };
 
+  // Calcular el total acumulado de la venta
   const totalVenta = carrito.reduce(
     (acc, item) => acc + item.precio * item.cantidadVendida,
     0
@@ -125,15 +140,18 @@ function CrearVenta() {
   return (
     <div className="container-a mt-4">
       <div className="row">
+        {/* Sección de formulario para agregar productos y realizar la venta */}
         <div className="col-md-6">
           <h3>Registrar Venta</h3>
 
+          {/* Mostrar errores de registro si existen */}
           {registerErrors.map((error, i) => (
             <div key={i} className="alert alert-danger">
               {error}
             </div>
           ))}
 
+          {/* Formulario para agregar productos al carrito */}
           <form onSubmit={handleSubmit(agregarProducto)}>
             <label>Producto</label>
             <select
@@ -161,6 +179,7 @@ function CrearVenta() {
             </button>
           </form>
 
+          {/* Formulario para completar datos y realizar la venta */}
           <form onSubmit={handleSubmit(realizarVenta)} className="mt-4">
             <label>Tipo de Documento</label>
             <select
@@ -171,6 +190,7 @@ function CrearVenta() {
               <option value="factura">Factura</option>
             </select>
 
+            {/* Mostrar campos adicionales sólo si es factura */}
             {tipoDocumento === "factura" && (
               <>
                 <label className="mt-2">RUT Cliente</label>
@@ -200,7 +220,7 @@ function CrearVenta() {
               Realizar Venta
             </button>
 
-            {/* Botón para descargar PDF si existe */}
+            {/* Mostrar botón para descargar PDF si se generó */}
             {pdfFile && (
               <div className="mt-3">
                 <a
@@ -215,11 +235,13 @@ function CrearVenta() {
             )}
           </form>
 
+          {/* Botón para volver a la página principal */}
           <button className="boton-Eliminar" onClick={() => navigate("/home")}>
             Volver
           </button>
         </div>
 
+        {/* Sección de tabla que muestra los productos agregados al carrito */}
         <div className="col-md-6">
           <h4>Productos Agregados</h4>
           <table className="table-interior">

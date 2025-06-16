@@ -4,16 +4,20 @@ import { useNavigate } from "react-router-dom";
 import styles from "./AdministrarProveedores.module.css";
 
 function CrearProveedores() {
+  // Inicializamos react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navigate = useNavigate();
-  const [registerErrors, setRegisterErrors] = useState([]);
 
+  const navigate = useNavigate(); // para navegar programáticamente
+  const [registerErrors, setRegisterErrors] = useState([]); // para errores al registrar
+
+  // Función que se ejecuta al enviar el formulario
   const onSubmit = async (values) => {
     try {
+      // Petición POST para crear nuevo proveedor
       const response = await fetch("http://localhost:4000/api/saveproveedors", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -21,23 +25,26 @@ function CrearProveedores() {
       });
 
       if (!response.ok) {
+        // Si hay error, parseamos respuesta
         const errorData = await response.json();
 
-        // Manejo específico para errores de duplicado
+        // Manejo específico para error de duplicado MongoDB
         if (errorData.code === 11000) {
           setRegisterErrors([
-            "El usuario ya está registrada. Por favor, elige otra.",
+            "El proveedor ya está registrado. Por favor, elige otro.",
           ]);
         } else {
+          // Si errorData es arreglo, lo mostramos tal cual, si no, mostramos mensaje o genérico
           setRegisterErrors(
             Array.isArray(errorData)
               ? errorData
               : [errorData.message || "Error desconocido"]
           );
         }
-        return;
+        return; // salimos sin navegar
       }
 
+      // Si todo salió bien, navegamos a lista de proveedores
       navigate("/AdministrarProveedores");
     } catch (error) {
       console.error("Error al enviar datos:", error);
@@ -47,26 +54,29 @@ function CrearProveedores() {
 
   return (
     <div className={`container-a mt-4`}>
+      {/* Mostrar errores si existen */}
       {registerErrors.map((error, i) => (
         <div key={i} className="alert alert-danger">
           {error}
         </div>
       ))}
-      
+
       <h3>Registrar Proveedor</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="nombre">Nombre de Empresa</label>
+        {/* Nombre Empresa */}
+        <label htmlFor="nombre_empresa">Nombre de Empresa</label>
         <input
           id="nombre_empresa"
           type="text"
           {...register("nombre_empresa", { required: "Este campo es requerido" })}
-          placeholder="Ej: Alta Técnología Médica"
+          placeholder="Ej: Alta Tecnología Médica"
           autoComplete="nombre_empresa"
         />
         {errors.nombre_empresa && (
           <p className="text-danger">{errors.nombre_empresa.message}</p>
         )}
 
+        {/* Dirección */}
         <label htmlFor="direccion">Dirección</label>
         <input
           id="direccion"
@@ -78,33 +88,38 @@ function CrearProveedores() {
         {errors.direccion && (
           <p className="text-danger">{errors.direccion.message}</p>
         )}
-        <label htmlFor="telefono">teléfono</label>
+
+        {/* Teléfono */}
+        <label htmlFor="telefono">Teléfono</label>
         <input
           id="telefono"
           type="number"
           {...register("telefono", { required: "Este campo es requerido" })}
-          placeholder="Ej: Piedra"
-          autoComplete="telefono"
+          placeholder="Ej: 123456789"
+          autoComplete="tel"
         />
         {errors.telefono && (
-          <p className="text-danger">{errors.nombre_empresa.message}</p>
+          <p className="text-danger">{errors.telefono.message}</p>
         )}
 
+        {/* Email */}
         <label htmlFor="email">Correo</label>
         <input
           id="email"
           type="email"
           {...register("email", { required: "Este campo es requerido" })}
           placeholder="Ej: xxx@xxx.com"
+          autoComplete="email"
         />
-        {errors.Correo && (
-          <p className="text-danger">{errors.Correo.message}</p>
+        {errors.email && (
+          <p className="text-danger">{errors.email.message}</p>
         )}
 
         <button type="submit" className="boton-Agregar">
           Agregar
         </button>
       </form>
+
       <p className="mt-3">
         <button
           className="btn btn-danger"
