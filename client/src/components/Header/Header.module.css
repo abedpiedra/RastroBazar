@@ -3,7 +3,7 @@ header {
     justify-content: center;
     align-items: center;
     padding: 10px 0px 0px 0px ;
-    background-color: #ef9dd7;
+    background-color: #F5F0EB;
 
     >div {
         margin-left: 20px;
@@ -14,6 +14,7 @@ header {
         list-style: none;
 
         >li {
+            font-size: 18px;
             display: flex;
             align-items: center;
             display: flex;
@@ -22,7 +23,7 @@ header {
 
             >a {
                 text-decoration: none;
-                color: #ffffff;
+                color: #5A3E2B;
                 text-align: center;
             }
         }
@@ -33,7 +34,7 @@ header {
 
     >ul>li:hover {
         border-radius: 10px;
-        background-color: #c563b9;
+        background-color: #C19A6B;
         transition: 1s ease;
     }
 }
@@ -41,16 +42,16 @@ header {
 .boton-logout {
     width: 70px;
     height: 50px;
-    background-color: #f077f0;
+    background-color: #A67C52;
     border: none;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .boton-logout:hover {
         border-radius: 10px;
-        background-color: #c563b9;
+        background-color: #C19A6B;
         transition: 1s ease;
 }

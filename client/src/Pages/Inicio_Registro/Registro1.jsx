@@ -45,7 +45,7 @@ function Registro1() {
           id="username"
           type="text"
           {...register("username", { required: true })}
-          placeholder="Ej: Abed Piedra"
+          placeholder="Nombre Apellido"
           autoComplete="name"
         />
         {errors.username && <p>Username is required</p>}
@@ -54,17 +54,17 @@ function Registro1() {
           id="email"
           type="email"
           {...register("email", { required: true })}
-          placeholder="Ej: xxxx@gmail.com"
+          placeholder="Email"
           autoComplete="email" // Cambiado a autoComplete
         />
-        {errors.email && <p>email is required</p>}
+        {errors.email && <p>Email is required</p>}
         <label htmlFor="rol">Rol</label>
         <select id="rol" {...register("rol", { required: true })}>
           <option value="">Selecciona un rol</option>
           <option value="Empleado">Empleado</option>
           <option value="Dueño">Dueño</option>
         </select>
-        {errors.rol && <p>rol is required</p>}
+        {errors.rol && <p>Rol is required</p>}
         <label htmlFor="password">Contraseña</label>
         <input
           id="password"
@@ -74,7 +74,7 @@ function Registro1() {
           autoComplete="new-password" // Cambiado a autoComplete
         />
 
-        {errors.password && <p>password is required</p>}
+        {errors.password && <p>Password is required</p>}
         <button className="boton-Agregar" type="submit">Registrar</button>
       </form>
       <p className="signup-link">

@@ -49,14 +49,13 @@ function BackupConfig() {
   };
 
   return (
-    <div className="container-a mt-5">
+    <div className="container-a mt-3">
       <h2>Configuración de Respaldos</h2>
 
-      <div className="mt-4">
+      <div className="mt-3">
         <label>Intervalo de respaldo automático (minutos):</label>
         <input
           type="number"
-          className="form-control w-25"
           value={intervalo}
           onChange={(e) => setIntervalo(e.target.value)}
         />
@@ -65,14 +64,14 @@ function BackupConfig() {
         </button>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-3">
         <h4>Respaldar ahora:</h4>
         <button className="boton-Agregar" onClick={respaldarAhora}>
           Generar Respaldo
         </button>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-3">
         <h4>Cargar respaldo:</h4>
         <input
           type="file"

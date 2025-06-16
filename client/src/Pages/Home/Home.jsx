@@ -1,24 +1,35 @@
-import React from 'react';
-import './Home.module.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./Home.module.css";
+import logo from "../../Images/rastrobazar-logo.png"; // ajusta la ruta según tu estructura
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/AdministrarProducts");
+  };
+
   return (
-    <main>
-      <h1 className="titulo">SISTEMA INTERNO / VISTA ADMINISTRADOR</h1>
-      <p>
-        Este sistema interno está diseñado para facilitar la gestión y
-        supervisión de las operaciones administrativas en los centros de
-        atención. A través de la interfaz del administrador, se puede acceder a
-        información crítica relacionada con la agenda de Box de atención, manejo
-        de personal, control de insumos y la administración de pacientes. Los
-        administradores tendrán la capacidad de visualizar, modificar y
-        programar las agendas de los Box de atención para asegurar que los
-        recursos de Kinesiología y Fonoaudiología estén optimizados. Además, el
-        sistema permite clasificar a los pacientes por etapas de tratamiento,
-        así como registrar el estado de las terapias, ya sea terminada,
-        suspendida o extendida, lo que facilita el seguimiento y control de los
-        servicios ofrecidos.
-      </p>
+    <main style={{ textAlign: "center", padding: "2rem" }}>
+      <h1 style={{ color: "#7E370F" }}>Bienvenido a RastroBazar</h1>
+      <h5 style={{ fontSize: "20px", color: "#C86B3E" }}>El orden que tu negocio necesita, sin complicaciones.</h5>
+      <img
+        src={logo}
+        alt="Logo"
+        className="logo"
+        style={{ maxWidth: "200px", margin: "1rem auto", display: "block" }}
+      />
+
+      <h5 style={{ fontSize: "20px", color: "#C86B3E" }}>
+        Con RastroBazar puedes gestionar tu inventario, registrar tus ventas y
+        organizar tus proveedores sin complicaciones. Olvídate de los cuadernos
+        y las planillas: aquí tienes todo lo que tu negocio necesita, en un solo
+        lugar y al alcance de tu mano.
+      </h5>
+      <button onClick={handleClick} className="boton-Agregar">
+        Ir a Administración de Productos
+      </button>
     </main>
   );
 };

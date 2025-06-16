@@ -1,3 +1,13 @@
+
+.App {
+  background-color: #ffffff; /* rosa palo */
+  min-height: 100vh;         /* para que ocupe toda la pantalla */
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -10,16 +20,6 @@
 }
 
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
 .App-link {
   color: #61dafb;
@@ -32,11 +32,6 @@
   to {
     transform: rotate(360deg);
   }
-}
-.navbar{
-  padding-right: 10px !important;
-  background-color: #eaeae8;
-  font-size: 18px;
 }
 
 
@@ -64,21 +59,15 @@
 }
 
 
-.App {
-  background-color: #ffe7fb; /* rosa palo */
-  min-height: 100vh;         /* para que ocupe toda la pantalla */
-  margin: 0;
-  padding: 0;
-}
-
 
 .table-interior {
   width: 100%;
   border-collapse: collapse; /* evita bordes dobles */
   margin-top: 1rem;
   font-family: Arial, sans-serif;
-  font-size: 14px;
-  color: #333;
+  font-size: 18px;
+  color: #000000;
+  
 }
 
 .table-interior th,
@@ -86,10 +75,11 @@
   border: 1px solid #c0bfbf; /* borde gris claro */
   padding: 10px 15px;     /* espacio interno */
   text-align: left;
+
 }
 
 .table-interior thead {
-  background-color: #f8f8f8;
+  background-color: #f9f0e2;
   font-weight: bold;
 }
 
@@ -103,47 +93,50 @@
 }
 
 .container-a{
-    width: 80%; 
+    width: 100%; 
     margin: auto;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #ffe0f0; /* Rosa palo */
+    background-color: #fef9f5f3; /* Rosa palo */
 }
 .container-a input,
 .container-a select,
 .container-a textarea {
-  background-color: #fff6f9;
-  border: 1px solid #d68aad;
-  color: #5a1a3b;
+  background-color: #ffffff;
+  color: #000000;
   padding: 8px 10px;
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 16px;
   transition: background-color 0.3s ease;
 }
 
 .container-a input:focus,
 .container-a select:focus,
 .container-a textarea:focus {
-  background-color: #ffd6e8;
+  background-color: #ffffff;
   outline: none;
-  border-color: #a04d7e;
+  border-color: #a65c2a; /* Café */
+  box-shadow: 0 0 5px rgba(166, 92, 42, 0.5); /* Sombra suave café */
 }
 
+
+
 .container-a label {
-  color: #5a1a3b;
+  color: #080503;
+  font-size: 18px;
   font-weight: 600;
   margin-top: 10px;
   display: block;
 }
 
 .boton-Eliminar {
-  background-color: #ff7da6; /* Rosa */
+  background-color: #e39d4c; /* Rosa */
   color: white;
   border: none;
   padding: 10px;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -151,19 +144,19 @@
 }
 
 .boton-Eliminar:hover {
-  background-color: #e76b95; /* Un tono más oscuro al pasar el mouse */
+  background-color: #af5713; /* Un tono más oscuro al pasar el mouse */
   transform: scale(1.05);
   cursor: pointer;
 }
 
 
 .boton-Agregar {
-  background-color: #eb3f75; /* Rosa */
+  background-color: #cc8240; /* Rosa */
   color: white;
   border: none;
   padding: 10px;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -171,8 +164,13 @@
 }
 
 .boton-Agregar:hover {
-  background-color: #bb174e; /* Un tono más oscuro al pasar el mouse */
+  background-color: #ad4d03; /* Un tono más oscuro al pasar el mouse */
   transform: scale(1.05);
-  cursor: pointer;
+  cursor: pointer;;
 }
 
+p {
+  font-size: 20px;
+  text-align: center;
+  color: #000000;
+}

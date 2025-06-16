@@ -16,7 +16,7 @@ function Login() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/AdministrarProveedores");
+      navigate("/home");
     }
   }, [isAuthenticated, navigate]);
 
@@ -31,7 +31,7 @@ function Login() {
       ))}
       <img
         className={styles.logo}
-        src=""
+        src="./src/Images/rastrobazar-logo.png"
         alt=""
       />
       <h3>Bienvenido a Rastrobazar</h3>
@@ -41,7 +41,7 @@ function Login() {
           id="email"
           type="email"
           {...register("email", { required: true })}
-          placeholder="a.piedra@gmail.com"
+          placeholder="Email"
         />
         {errors.email && <p>email is required</p>}
         <label htmlFor="password">Contraseña</label>
@@ -49,7 +49,7 @@ function Login() {
           id="password"
           type="password"
           {...register("password", { required: true })}
-          placeholder="********"
+          placeholder="Contraseña"
         />
         {errors.password && <p>password is required</p>}
 

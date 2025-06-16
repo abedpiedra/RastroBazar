@@ -11,8 +11,7 @@
 .logo {
   display: block;
   margin: 0 auto 20px auto;
-  width: 51px;
-  height: 75px;
+  width: 120px;
 }
 
 .signup-link {
@@ -62,7 +61,7 @@ input::placeholder {
 }
 
 p{/* Mensajes de error */
-  color: red;
+  color: rgb(248, 54, 54);
   font-size: 15px;
   margin: 0px 0 !important;
   min-height: 20px;
