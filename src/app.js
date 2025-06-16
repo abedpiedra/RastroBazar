@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes.js";
 import taskRoutes from "./routes/tasks.routes.js";
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import backupRoutes from "./routes/backups.routes.js";
 import proveedorRoutes from "./routes/proveedors.routes.js";
 import productoRoutes from "./routes/products.routes.js";
 import cors from "cors";
@@ -13,6 +14,7 @@ import notificacionesRoutes from "./routes/notificaciones.routes.js";
 import ventasRoutes from "./routes/ventas.routes.js"; 
 import path from 'path';
 import { fileURLToPath } from 'url';
+import backupConfigRoutes from "./routes/backupsconfig.routes.js";
 
 dotenv.config();
 
@@ -39,6 +41,8 @@ app.use("/api", productoRoutes);
 app.use("/api", alertasRoutes);
 app.use("/api", notificacionesRoutes);
 app.use("/api", ventasRoutes); 
+app.use("/api", backupRoutes);
+app.use("/api", backupConfigRoutes);
 
 // Esta línea es la clave para servir los PDFs en la URL que usas desde frontend:
 app.use('/api/ventas/pdfs', express.static(path.join(__dirname, 'pdfs', 'ventas')));

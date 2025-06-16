@@ -11,9 +11,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "adm-zip": "^0.5.16",
+    "archiver": "^7.0.1",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^2.2.0",
+    "child_process": "^1.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "D": "^1.0.0",
@@ -26,10 +29,12 @@
     "mongoose": "^8.15.2",
     "morgan": "^1.10.0",
     "multer": "^2.0.1",
+    "node-cron": "^4.1.0",
     "nodemon": "^3.1.7",
     "pdfkit": "^0.17.1",
     "react-toastify": "^10.0.6",
     "sweetalert2": "^11.14.5",
+    "unzipper": "^0.12.3",
     "zod": "^3.23.8"
   }
 }

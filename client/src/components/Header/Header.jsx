@@ -50,6 +50,9 @@ const Header = () => {
           <Link to="/HistorialVenta">Historial Venta</Link>
         </li>
         <li>
+          <Link to="/Backups">Backups</Link>
+        </li>
+        <li>
         
         </li>
         <button onClick={handleLogout} className={styles["boton-logout"]}>

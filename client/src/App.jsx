@@ -31,6 +31,9 @@ import AlertaNotificacion from "./Pages/Alertas/AlertaNotificacion.jsx"; // Aseg
 import GenerarVentas from "./Pages/VentasBoletas/GenerarVentas.jsx"; // Asegúrate de que la ruta sea correcta
 import HistorialVentas from "./Pages/VentasBoletas/HistoriaVentas.jsx";
 
+//Respaldos
+import Backups from "./Pages/Backups/Backups.jsx"; // Asegúrate de que la ruta sea correcta
+
 function App() {
   return (
     <AuthProvider>
@@ -76,6 +79,7 @@ function App() {
                 />
                 <Route path="/GenerarVenta" element={<GenerarVentas />} />
                 <Route path="/HistorialVenta" element={<HistorialVentas />} />
+                <Route path="/Backups" element={<Backups />} />
               </Routes>
             </Layout>
           </BrowserRouter>

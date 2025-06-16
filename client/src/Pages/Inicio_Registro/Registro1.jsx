@@ -29,7 +29,7 @@ function Registro1() {
         src=""
         alt=""
       />
-      <h3>Registro - Edudown</h3>
+      <h3>Registro - RastroBazar</h3>
       {/* Mostrar errores de registro */}
       {registerErrors.length > 0 && (
         <div className="alert alert-danger">
