@@ -32,7 +32,7 @@ function Registro1() {
       {/* Logo: asegúrate de poner la ruta correcta o eliminar si no lo usas */}
       <img
         className="logo"
-        src="" // Aquí deberías poner la ruta a tu logo, por ejemplo: src={logo}
+        src="../../Images/logo.png"
         alt="Logo RastroBazar"
       />
       <h3>Registro - RastroBazar</h3>
