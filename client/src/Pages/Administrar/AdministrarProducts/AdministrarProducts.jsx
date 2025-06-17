@@ -82,7 +82,7 @@ const AdministrarProducts = () => {
 
         // Aquí revisamos si hay productos bajo el umbral
         data.forEach((producto) => {
-          if (producto.stock < producto.umbral) {
+          if (producto.stock <= producto.umbral) {
             const toastId = `stock-${producto._id}`;
             // Solo mostramos la alerta si no está activa
             if (!toast.isActive(toastId)) {
