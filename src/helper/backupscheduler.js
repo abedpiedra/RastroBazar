@@ -17,7 +17,7 @@ function leerIntervalo() {
   if (!fs.existsSync(configPath)) {
     return 10; // Retorna 10 minutos por defecto si no existe el archivo
   }
-  // Leer y parsear el archivo JSON de configuración
+  // Leer y parsear el archivo JSON de configuración.
   const config = JSON.parse(fs.readFileSync(configPath));
   // Retorna el intervalo definido o 10 si no está especificado
   return config.intervalo || 10;
