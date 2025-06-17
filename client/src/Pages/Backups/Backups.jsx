@@ -60,7 +60,6 @@ function BackupConfig() {
       <h2>Configuración de Respaldos</h2>
       <div className="mt-3">
         <label>Intervalo de respaldo automático (minutos):</label>
-        // Input para el intervalo de respaldo
         <input
           type="number"
           value={intervalo}
