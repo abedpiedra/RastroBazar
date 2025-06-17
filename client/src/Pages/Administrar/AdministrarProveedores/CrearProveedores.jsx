@@ -69,7 +69,6 @@ function CrearProveedores() {
           id="nombre_empresa"
           type="text"
           {...register("nombre_empresa", { required: "Este campo es requerido" })}
-          placeholder="Ej: Alta Tecnología Médica"
           autoComplete="nombre_empresa"
         />
         {errors.nombre_empresa && (
@@ -82,7 +81,6 @@ function CrearProveedores() {
           id="direccion"
           type="text"
           {...register("direccion", { required: "Este campo es requerido" })}
-          placeholder="Ej: Piedra"
           autoComplete="direccion"
         />
         {errors.direccion && (
@@ -95,7 +93,6 @@ function CrearProveedores() {
           id="telefono"
           type="number"
           {...register("telefono", { required: "Este campo es requerido" })}
-          placeholder="Ej: 123456789"
           autoComplete="tel"
         />
         {errors.telefono && (
@@ -108,7 +105,6 @@ function CrearProveedores() {
           id="email"
           type="email"
           {...register("email", { required: "Este campo es requerido" })}
-          placeholder="Ej: xxx@xxx.com"
           autoComplete="email"
         />
         {errors.email && (

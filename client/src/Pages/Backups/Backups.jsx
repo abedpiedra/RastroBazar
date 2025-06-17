@@ -65,19 +65,16 @@ function BackupConfig() {
           value={intervalo}
           onChange={(e) => setIntervalo(e.target.value)}
         />
-        // Botón para guardar la configuración
         <button className="boton-Agregar" onClick={guardarConfiguracion}>
           Guardar Configuración
         </button>
       </div>
-      // Botón para respaldar ahora
       <div className="mt-3">
         <h4>Respaldar ahora:</h4>
         <button className="boton-Agregar" onClick={respaldarAhora}>
           Generar Respaldo
         </button>
       </div>
-      // Sección para cargar un respaldo
       <div className="mt-3">
         <h4>Cargar respaldo:</h4>
         <input

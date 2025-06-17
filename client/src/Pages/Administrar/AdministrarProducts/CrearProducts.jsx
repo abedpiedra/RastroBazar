@@ -81,8 +81,7 @@ function CrearProducts() {
         >
           <option value="" disabled>
             {""}
-            /* Establecer la opción seleccionada por defecto */
-            Selecciona una sucursal
+            Selecciona un proveedor
           </option>
           {Proveedors.length > 0 ? (
             Proveedors.map((Proveedor) => (

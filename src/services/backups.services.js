@@ -26,7 +26,7 @@ export const generarBackup = async () => {
     await fs.mkdir(pdfsFolder, { recursive: true });
 
     // Backup de MongoDB
-    const dbUri = process.env.MONGODB_URI || "mongodb://localhost:27017/rastrobazar";  // ajusta aquí
+    const dbUri = process.env.MONGODB_URI || "mongodb://localhost:27017/rastrobazar"; 
     const cmd = `mongodump --uri="${dbUri}" --out="${dbBackupFolder}"`;
 
     // Ejecutar el comando de backup

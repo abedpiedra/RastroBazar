@@ -21,8 +21,8 @@ const AdministrarProducts = () => {
       text: `¿Eliminar "producto ${nombre}"?`,
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#c83968",
-      cancelButtonColor: "#eb3f75",
+      confirmButtonColor: "#af5713",
+      cancelButtonColor: "#e39d4c",
       confirmButtonText: "Sí, eliminar",
     });
 
